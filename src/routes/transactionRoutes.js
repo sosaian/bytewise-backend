@@ -3,9 +3,9 @@ import TransactionController from '../controller/transactionController.js'
 
 const router = express.Router()
 
-router.post('/api/users', TransactionController.create);
-router.get('/api/users/:id', TransactionController.get);
-router.put('/api/users/:id', TransactionController.update);
-router.delete('/api/users/:id', TransactionController.delete);
+router.post('/api/transaction', TransactionController.create);
+router.get('/api/transaction/:id', TransactionController.get);
+router.put('/api/transaction/:id', TransactionController.update);
+router.delete('/api/transaction/:id', TransactionController.delete);
 
 export default router;
