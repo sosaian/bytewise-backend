@@ -45,6 +45,18 @@ class TransactionController {
             res.status(500).json({ error: 'Error deleting transaction' });
         }
     }
+
+
+    // Obtener resumen del presupuesto
+    static async getBudgetSummary(req, res) {
+        const { id_user } = req.params; // Se asume que el id_user se pasa como parámetro
+        try {
+            const budgetSummary = await Transaction.getBudgetSummary(id_user);
+            res.json(budgetSummary);
+        } catch (error) {
+            res.status(500).json({ error: 'Error fetching budget summary' });
+        }
+    }
 }
 
 export default TransactionController;
