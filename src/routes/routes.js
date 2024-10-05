@@ -9,10 +9,7 @@ router.get('/api', (req, res) => {
 })
 
 //Rutas para User
-router.post('/api/users', UserController.create);
-router.get('/api/users/:id', UserController.get);
-router.put('/api/users/:id', UserController.update);
-router.delete('/api/users/:id', UserController.delete);
+
 
 
 //Rutas para Transaction

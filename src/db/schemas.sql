@@ -11,7 +11,7 @@ create table if not exists user (
 -- Presupuesto - Mandados
 -- -$5000 - Compro en la verdulería
 -- +$1500 - Reintegro de compras
-create table if not exists transaction(
+create table if not exists  transaction(
     id integer PRIMARY KEY auto_increment,
     id_user integer,
     type_transaction ENUM('expense', 'income', 'save') not null,
