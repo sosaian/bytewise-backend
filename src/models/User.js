@@ -4,6 +4,7 @@ import pool from '../db/db.js';
 
 
 class User{
+
     static async createUser(name, email, password){
         //Realizo consulta a la base de datos utilizando el metodo query, 
         //dicha consulta se almacena en result.
@@ -14,6 +15,7 @@ class User{
         //Devuelve id del nuevo usuario creado.
         return result.insertId;
     }
+
 
     static async getUserById(id){
         const [rows] = await pool.query (
@@ -30,6 +32,7 @@ class User{
         );
     }
 
+   
     static async deleteUser(id) {
         await pool.query('DELETE FROM user WHERE id = ?', [id]);
     }

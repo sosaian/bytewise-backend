@@ -1,6 +1,6 @@
 use bytewise;
 
-create table user (
+create table if not exists user (
     id integer PRIMARY KEY auto_increment,
     name_user varchar(255) not null,
     email varchar(255) not null,
@@ -11,7 +11,7 @@ create table user (
 -- Presupuesto - Mandados
 -- -$5000 - Compro en la verdulería
 -- +$1500 - Reintegro de compras
-create table transaction(
+create table if not exists transaction(
     id integer PRIMARY KEY auto_increment,
     id_user integer,
     type_transaction ENUM('expense', 'income', 'save') not null,
@@ -25,24 +25,24 @@ create table transaction(
 -- * Crear presupuestos para regalos o proyectos personales
 -- * Armar un fondo de emergencia
 -- * Juntar 6 meses de salarios en el fondo de emergencia
-create table task(
+create table if not exists task(
     id integer PRIMARY KEY auto_increment,
-    id_user,
-    description_task varchar(255) not null,
-    status_task ENUM('not_started','in_progress', 'complete', 'overdue', 'canceled') default 'not_started',
+    id_user integer,
+    description_task varchar(255),
+    status_task ENUM('not_started','in_progress', 'complete', 'overdue', 'canceled') default ('not_started'),
     due_date date,
-    foreign key (id_user) references user(id),
+    foreign key (id_user) references user(id)
 );
 
 -- Examples
 -- Esto representa el presupuesto TOTAL con el que cuento
-create table budget(
+create table if not exists budget(
     id integer PRIMARY KEY auto_increment,
     id_user integer,
     amount_spent decimal(10,2) default 0,
     amount_remaining decimal(10,2) default 0,
-    foreign key (id_user) references user(id),
-)
+    foreign key (id_user) references user(id)
+);
 
 
 
@@ -53,5 +53,5 @@ create table budget(
 
 
 
-insert into user (ame_user, email, password_user) values 
+insert into user (name_user, email, password_user) values 
 ('evelin', 'ejemplo@gmail.com','contraseña');
