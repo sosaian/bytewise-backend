@@ -29,3 +29,5 @@ process.on('SIGINT', async () => {
     console.log('Pool de conexiones cerrado.');
     process.exit(0);
 });
+
+export default pool
