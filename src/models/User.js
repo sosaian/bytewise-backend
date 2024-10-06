@@ -5,12 +5,12 @@ import pool from '../db/db.js';
 
 class User{
 
-    static async createUser(name, email, password){
+    static async createUser(name_user, email, password_user){
         //Realizo consulta a la base de datos utilizando el metodo query, 
         //dicha consulta se almacena en result.
         const [result] = await pool.query(
             'insert into user (name_user, email, password_user) values (?,?,?)',
-            [name, email, password]
+            [name_user, email, password_user]
         );
         //Devuelve id del nuevo usuario creado.
         return result.insertId;

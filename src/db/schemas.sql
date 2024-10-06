@@ -2,9 +2,9 @@ use bytewise;
 
 create table if not exists user (
     id integer PRIMARY KEY auto_increment,
-    name_user varchar(255) not null,
-    email varchar(255) not null,
-    password_user varchar(255) not null 
+    name_user varchar(255),
+    email varchar(255),
+    password_user varchar(255) 
 );
 
 -- Examples
@@ -34,24 +34,4 @@ create table if not exists task(
     foreign key (id_user) references user(id)
 );
 
--- Examples
--- Esto representa el presupuesto TOTAL con el que cuento
-create table if not exists budget(
-    id integer PRIMARY KEY auto_increment,
-    id_user integer,
-    amount_spent decimal(10,2) default 0,
-    amount_remaining decimal(10,2) default 0,
-    foreign key (id_user) references user(id)
-);
 
-
-
-
-
-
-
-
-
-
-insert into user (name_user, email, password_user) values 
-('evelin', 'ejemplo@gmail.com','contraseña');
