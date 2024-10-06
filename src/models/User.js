@@ -25,12 +25,32 @@ class User{
         return rows[0];
     }
 
-    static async updateUser(id, name, email, password) {
-        await pool.query(
-            'UPDATE user SET name_user = ?, email = ?, password_user = ? WHERE id = ?',
-            [name, email, password, id]
-        );
+    static async updateUser(id, data) {
+        let query = 'UPDATE user SET';
+        const params = [];
+    
+        // Construir dinámicamente la consulta solo con los campos proporcionados
+        if (data.name_user) {
+            query += ' name_user = ?,';
+            params.push(data.name_user);
+        }
+        if (data.email) {
+            query += ' email = ?,';
+            params.push(data.email);
+        }
+        if (data.password_user) {
+            query += ' password_user = ?,';
+            params.push(data.password_user);
+        }
+    
+        // Eliminar la última coma y añadir la condición WHERE
+        query = query.slice(0, -1) + ' WHERE id = ?';
+        params.push(id);
+    
+        // Ejecutar la consulta con los parámetros
+        await pool.query(query, params);
     }
+    
 
    
     static async deleteUser(id) {

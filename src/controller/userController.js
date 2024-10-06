@@ -35,14 +35,22 @@ class UserController {
 
     static async update(req, res) {
         const { id } = req.params;
-        const { name, email, password } = req.body;
+        const { name_user, email, password_user} = req.body;
+    
+        // Crear un objeto con los campos opcionales que se quieren actualizar
+        const data = {};
+        if (name_user) data.name_user = name_user;
+        if (email) data.email = email;
+        if (password_user) data.password_user = password_user;
+    
         try {
-            await User.updateUser(id, name, email, password);
+            await User.updateUser(id, data);
             res.json({ message: 'User updated successfully' });
         } catch (error) {
-            res.status(500).json({ error: 'Error updating user' });
+            res.status(500).json({ error: 'Error updatingggg user' });
         }
     }
+    
 
     static async delete(req, res) {
         const { id } = req.params;
