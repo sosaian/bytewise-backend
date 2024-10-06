@@ -2,9 +2,12 @@ import Task from '../models/Task.js'
 
 export class TaskController {
     static async create(req, res) {
-        const { id_user, description_task, status_task, due_date } = req.body
+        const { description_task, status_task, due_date } = req.body
+        const { id: USER_ID } = req.user
+
         try {
-            const taskId = await Task.createTask(id_user, description_task, status_task, due_date)
+            const taskId = await Task.createTask(USER_ID, description_task, status_task, due_date)
+            
             res.status(201).json({ id: taskId })
         } catch (error) {
             res.status(500).json({ error: 'Error creating task' })
@@ -14,7 +17,7 @@ export class TaskController {
     static async get(req, res) {
         const { id } = req.params
         const { id: USER_ID } = req.user
-        
+
         try {
             await TaskAuth.verifyTaskOwnership(id, USER_ID)
             
