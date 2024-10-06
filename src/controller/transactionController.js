@@ -70,9 +70,11 @@ export class TransactionController {
     }
 
     static async getBudgetSummary(req, res) {
-        const { id_user } = req.params // Se asume que el id_user se pasa como parámetro
+        const { id: USER_ID } = req.user
+        
         try {
-            const budgetSummary = await Transaction.getBudgetSummary(id_user)
+            const budgetSummary = await Transaction.getBudgetSummary(USER_ID)
+            
             res.json(budgetSummary)
         } catch (error) {
             res.status(500).json({ error: 'Error fetching budget summary', error })
