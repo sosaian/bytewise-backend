@@ -2,7 +2,7 @@ import pool from '../db/db.js';
 
 
 class Transaction{
-    static async createTransaction(id_user, type_transaction, amount){
+    static async createTransaction(id_user, type_transaction, amount, description_transaction){
         // Verifico si existe el usuario
         const [userRows] = await pool.query('SELECT * FROM user WHERE id = ?', [id_user]);
         if (userRows.length === 0) {
@@ -11,8 +11,8 @@ class Transaction{
         
         // Creo una transaccion si el usuario existe
         const [result] = await pool.query(
-            'INSERT INTO transaction (id_user, type_transaction, amount) VALUES (?, ?, ?, ?)',
-            [id_user, type_transaction, amount, new Date()]
+            'INSERT INTO transactions (id_user, type_transaction, amount,description_transaction ) VALUES (?, ?, ?, ?)',
+            [id_user, type_transaction, amount, description_transaction]
         );
 
         return result.insertId;
@@ -21,16 +21,16 @@ class Transaction{
 
     static async getTransactionById(id){
         const [rows] = await pool.query(
-            'select * from transaction where id = ?', [id]);
+            'select * from transactions where id = ?', [id]);
         return rows[0];
     }
 
     static async deleteTransaction(id){
-        await pool.query('delete from transaction where id = ?', [id]);
+        await pool.query('delete from transactions where id = ?', [id]);
     }
 
     static async updateTransaction(id, data) {
-        let query = 'UPDATE transaction SET';
+        let query = 'UPDATE transactions SET';
         const params = [];
     
         // Construir dinámicamente la consulta solo con los campos proporcionados
@@ -46,6 +46,12 @@ class Transaction{
             query += ' date_transaction = ?,';
             params.push(data.date_transaction);
         }
+        if (data.description_transaction) {
+            query += ' description_transaction = ?,';
+            params.push(data.description_transaction);
+        }
+
+        
     
         // Eliminar la última coma y añadir la condición WHERE
         query = query.slice(0, -1) + ' WHERE id = ?';
@@ -63,7 +69,7 @@ class Transaction{
                 SUM(CASE WHEN type_transaction = 'income' THEN amount ELSE 0 END) AS total_income,
                 SUM(CASE WHEN type_transaction = 'expense' THEN amount ELSE 0 END) AS total_expense,
                 SUM(CASE WHEN type_transaction = 'save' THEN amount ELSE 0 END) AS total_savings
-            FROM transaction 
+            FROM transactions
             WHERE id_user = ?`,
             [id_user]
         );

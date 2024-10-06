@@ -2,9 +2,9 @@ import Transaction from '../models/Transaction.js';
 
 class TransactionController {
     static async create(req, res) {
-        const { id_user, type_transaction, amount} = req.body;
+        const { id_user, type_transaction, amount, description_transaction} = req.body;
         try {
-            const transactionId = await Transaction.createTransaction(id_user, type_transaction, amount);
+            const transactionId = await Transaction.createTransaction(id_user, type_transaction, amount, description_transaction);
             res.status(201).json({ id: transactionId });
         } catch (error) {
             res.status(500).json({ error: 'Error creating transaction' });
@@ -27,13 +27,14 @@ class TransactionController {
 
     static async update(req, res) {
         const { id } = req.params;
-        const { type_transaction, amount, date_transaction } = req.body;
+        const { type_transaction, amount, date_transaction, description_transaction } = req.body;
     
         // Crear un objeto con los campos opcionales que se quieren actualizar
         const data = {};
         if (type_transaction) data.type_transaction = type_transaction;
         if (amount) data.amount = amount;
         if (date_transaction) data.date_transaction = date_transaction;
+        if(description_transaction) data.description_transaction = description_transaction;
     
         try {
             await Transaction.updateTransaction(id, data);
@@ -61,7 +62,7 @@ class TransactionController {
             const budgetSummary = await Transaction.getBudgetSummary(id_user);
             res.json(budgetSummary);
         } catch (error) {
-            res.status(500).json({ error: 'Error fetching budget summary' });
+            res.status(500).json({ error: 'Error fetching budget summary', error });
         }
     }
 }
