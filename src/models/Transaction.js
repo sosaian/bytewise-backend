@@ -2,7 +2,7 @@ import pool from '../db/db.js';
 
 
 class Transaction{
-    static async createTransaction(id_user, type_transaction, amount, date_transaction){
+    static async createTransaction(id_user, type_transaction, amount){
         // Verifico si existe el usuario
         const [userRows] = await pool.query('SELECT * FROM user WHERE id = ?', [id_user]);
         if (userRows.length === 0) {
@@ -11,8 +11,8 @@ class Transaction{
         
         // Creo una transaccion si el usuario existe
         const [result] = await pool.query(
-            'INSERT INTO transaction (id_user, type_transaction, amount, date_transaction) VALUES (?, ?, ?, ?)',
-            [id_user, type_transaction, amount, date_transaction]
+            'INSERT INTO transaction (id_user, type_transaction, amount) VALUES (?, ?, ?, ?)',
+            [id_user, type_transaction, amount, new Date()]
         );
 
         return result.insertId;
@@ -29,9 +29,30 @@ class Transaction{
         await pool.query('delete from transaction where id = ?', [id]);
     }
 
-    static async updateTransaction(id, type_transaction, amount, date_transaction){
-        await pool.query('update transaction set type_transaction = ?, amount = ?, date_transaction = ? where id = ?',
-            [type_transaction, amount, date_transaction, id]);
+    static async updateTransaction(id, data) {
+        let query = 'UPDATE transaction SET';
+        const params = [];
+    
+        // Construir dinámicamente la consulta solo con los campos proporcionados
+        if (data.type_transaction) {
+            query += ' type_transaction = ?,';
+            params.push(data.type_transaction);
+        }
+        if (data.amount) {
+            query += ' amount = ?,';
+            params.push(data.amount);
+        }
+        if (data.date_transaction) {
+            query += ' date_transaction = ?,';
+            params.push(data.date_transaction);
+        }
+    
+        // Eliminar la última coma y añadir la condición WHERE
+        query = query.slice(0, -1) + ' WHERE id = ?';
+        params.push(id);
+    
+        // Ejecutar la consulta con los parámetros
+        await pool.query(query, params);
     }
 
     //Reemplaza totalmente a la entidad BUDGET. 

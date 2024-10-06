@@ -2,9 +2,9 @@ import Transaction from '../models/Transaction.js';
 
 class TransactionController {
     static async create(req, res) {
-        const { id_user, type_transaction, amount, date_transaction } = req.body;
+        const { id_user, type_transaction, amount} = req.body;
         try {
-            const transactionId = await Transaction.createTransaction(id_user, type_transaction, amount, date_transaction);
+            const transactionId = await Transaction.createTransaction(id_user, type_transaction, amount);
             res.status(201).json({ id: transactionId });
         } catch (error) {
             res.status(500).json({ error: 'Error creating transaction' });
@@ -28,8 +28,15 @@ class TransactionController {
     static async update(req, res) {
         const { id } = req.params;
         const { type_transaction, amount, date_transaction } = req.body;
+    
+        // Crear un objeto con los campos opcionales que se quieren actualizar
+        const data = {};
+        if (type_transaction) data.type_transaction = type_transaction;
+        if (amount) data.amount = amount;
+        if (date_transaction) data.date_transaction = date_transaction;
+    
         try {
-            await Transaction.updateTransaction(id, type_transaction, amount, date_transaction);
+            await Transaction.updateTransaction(id, data);
             res.json({ message: 'Transaction updated successfully' });
         } catch (error) {
             res.status(500).json({ error: 'Error updating transaction' });
