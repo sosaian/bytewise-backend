@@ -1,12 +1,14 @@
 import express from 'express'
+import authMiddleware  from '../middleware/authMiddleware.js'
 import TransactionController from '../controller/transactionController.js'
 
 const router = express.Router()
 
-router.post('/api/transaction', TransactionController.create);
-router.get('/api/transaction/:id', TransactionController.get);
-router.put('/api/transaction/:id', TransactionController.update);
-router.delete('/api/transaction/:id', TransactionController.delete);
-router.get('/api/budget-summary/:id_user', TransactionController.getBudgetSummary);
+router.post('/api/transaction', authMiddleware, TransactionController.create)
+router.get('/api/transaction/:id', authMiddleware, TransactionController.get)
+router.put('/api/transaction/:id', authMiddleware, TransactionController.update)
+router.delete('/api/transaction/:id', authMiddleware, TransactionController.delete)
 
-export default router;
+router.get('api/budget-summary/:id_user', authMiddleware, TransactionController.getBudgetSummary)
+
+export default router
