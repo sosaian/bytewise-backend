@@ -19,9 +19,6 @@ try {
     process.exit(1); // Salir si no se puede conectar
 }
 
-// Hacer que el pool de conexiones esté disponible en la aplicación
-app.set('db', pool);
-
 
 // Cerrar el pool al terminar la aplicación
 process.on('SIGINT', async () => {

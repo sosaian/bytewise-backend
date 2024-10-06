@@ -1,4 +1,4 @@
-import pool from '../db.js';
+import pool from '../db/db.js';
 
 class Task {
     static async createTask(id_user, description_task, status_task, due_date) {
