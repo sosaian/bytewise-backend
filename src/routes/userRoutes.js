@@ -1,11 +1,12 @@
 import express from 'express'
+import authMiddleware  from '../middleware/authMiddleware.js'
 import UserController from '../controller/userController.js'
 
 const router = express.Router()
 
-router.post('/api/users', UserController.create);
-router.get('/api/users/:id', UserController.get);
-router.put('/api/users/:id', UserController.update);
-router.delete('/api/users/:id', UserController.delete);
+router.post('/api/users', authMiddleware, UserController.create)
+router.get('/api/users/:id', authMiddleware, UserController.get)
+router.put('/api/users/:id', authMiddleware, UserController.update)
+router.delete('/api/users/:id', authMiddleware, UserController.delete)
 
-export default router;
+export default router
