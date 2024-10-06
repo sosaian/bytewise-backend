@@ -2,9 +2,11 @@ import Transaction from '../models/Transaction.js'
 
 export class TransactionController {
     static async create(req, res) {
-        const { id_user, type_transaction, amount, description_transaction} = req.body
+        const { type_transaction, amount, description_transaction} = req.body
+        const { id: USER_ID } = req.user
+
         try {
-            const transactionId = await Transaction.createTransaction(id_user, type_transaction, amount, description_transaction)
+            const transactionId = await Transaction.createTransaction(USER_ID, type_transaction, amount, description_transaction)
             res.status(201).json({ id: transactionId })
         } catch (error) {
             res.status(500).json({ error: 'Error creating transaction' })
