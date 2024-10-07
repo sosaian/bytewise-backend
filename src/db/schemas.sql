@@ -16,6 +16,7 @@ create table if not exists  transactions(
     id_user integer,
     type_transaction ENUM('expense', 'income', 'save'),
     amount integer,
+    description_transaction varchar(255),
     date_transaction datetime DEFAULT CURRENT_TIMESTAMP, 
     foreign key (id_user) references user(id)
 );
