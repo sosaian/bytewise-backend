@@ -84,10 +84,10 @@ export class TransactionController {
 
 export class TransactionAuth {
     static async verifyTransactionOwnership(transaction_id, USER_ID) {
-        const TARGETED_TRANSACTION = await Task.getTransactionById(transaction_id)
+        const TARGETED_TRANSACTION = await Transaction.getTransactionById(transaction_id)
             
         if (!TARGETED_TRANSACTION) throw new Error('Transaction not found')
 
-        if (TARGETED_TASK.id_user !== USER_ID) throw new Error('Invalid transaction n ID')
+        if (TARGETED_TRANSACTION.id_user !== USER_ID) throw new Error('Invalid transaction n ID')
     }
 }
