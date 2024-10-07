@@ -37,11 +37,18 @@ export class TaskController {
         const { id } = req.params
         const { description_task, status_task, due_date } = req.body
         const { id: USER_ID } = req.user
+        const data = {}
 
         try {
             await TaskAuth.verifyTaskOwnership(id, USER_ID)
 
-            await Task.updateTask(id, description_task, status_task, due_date)
+            if (description_task) data.description_task = description_task
+            if (status_task) data.status_task = status_task
+            if (due_date) data.due_date = due_date
+
+            console.log(data)
+
+            await Task.updateTask(id, data)
             
             res.json({ message: 'Task updated successfully' })
         } catch (error) {
