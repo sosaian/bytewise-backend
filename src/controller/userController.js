@@ -32,6 +32,8 @@ export class UserController {
         const { id: USER_ID } = req.user
 
         try {
+            await User.deleteUserDependencies(USER_ID)
+            
             await User.deleteUser(USER_ID)
 
             res.clearCookie('access_token')
