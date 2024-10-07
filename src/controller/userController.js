@@ -1,19 +1,6 @@
 import User from '../models/User.js'
 
-export class UserController {
-    //  Technically no longer needed due to authController.register() handling this...
-    static async create(req, res) {
-        const { name_user, email, password_user } = req.body
-        
-        try {
-            const userId = await User.createUser(name_user, email, password_user)
-            
-            res.status(201).json({ id: userId })
-        } catch (error) {
-            res.status(500).json({ error: 'Error creating user' })
-        }
-    }
-    
+export class UserController {    
     static async get(req, res) {
         const { id } = req.params
         const { id: USER_ID } = req.user
