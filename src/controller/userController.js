@@ -29,15 +29,13 @@ export class UserController {
     }
     
     static async delete(req, res) {
-        const { id } = req.params
         const { id: USER_ID } = req.user
 
         try {
-            await UserAuth.verifyUserOwnership(id, USER_ID)
+            await User.deleteUser(USER_ID)
 
-            await User.deleteUser(id)
-
-            res.json({ message: 'User deleted successfully' })
+            res.clearCookie('access_token')
+               .json({ message: 'The user was deleted successfully. You will now be logged out.' })
         } catch (error) {
             res.status(500).json({ error: 'Error deleting user' })
         }
