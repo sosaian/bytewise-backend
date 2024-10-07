@@ -42,16 +42,6 @@ export class UserController {
     }
 }
 
-export class UserAuth {
-    static async verifyUserOwnership(target_id, USER_ID) {
-        const TARGETED_USER = await Task.getUserById(target_id)
-            
-        if (!TARGETED_USER) throw new Error('User not found')
-
-        if (target_id !== USER_ID) throw new Error('Invalid user ID')
-    }
-}
-
 export class UserValidation {
     // NOTE: Error handling could be improved... https://youtu.be/OhE-mEt37iA
     //       Also... this could be done simpler with 'zod'
