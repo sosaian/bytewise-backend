@@ -4,7 +4,7 @@ import { UserController } from '../controller/userController.js'
 
 const router = express.Router()
 
-router.put('/api/users/:id', authMiddleware, UserController.update)
+router.put('/api/users', authMiddleware, UserController.update)
 router.delete('/api/users/:id', authMiddleware, UserController.delete)
 
 export default router
