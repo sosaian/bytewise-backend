@@ -1,25 +1,6 @@
 import User from '../models/User.js'
 
-export class UserController {    
-    static async get(req, res) {
-        const { id } = req.params
-        const { id: USER_ID } = req.user
-
-        try {
-            await UserAuth.verifyUserOwnership(id, USER_ID)
-            
-            const user = await User.getUserById(id)
-            
-            if (user) {
-                res.json(user)
-            } else {
-                res.status(404).json({ error: 'User not found' })
-            }
-        } catch (error) {
-            res.status(500).json({ error: 'Error fetching user' })
-        }
-    }
-
+export class UserController {
     static async update(req, res) {
         const { id } = req.params
         const { name_user, email, password_user} = req.body
