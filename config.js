@@ -8,6 +8,7 @@ dotenv.config() // Load variables of .env file onto process.env
 export const {
     PORT = 3000,
     NODE_ENV,
+    CLIENT_URL,
     mysql_host = "127.0.0.1",
     mysql_user,
     mysql_password,
@@ -23,6 +24,6 @@ export const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS, 10) || 11
 // and just use it as a constant.
 
 // Verify that critical variables are actually defined
-if (!PORT || !NODE_ENV || !mysql_host || !mysql_user || !mysql_password || !mysql_database || !SECRET_JWT_KEY || !SALT_ROUNDS) {
+if (!PORT || !NODE_ENV || !CLIENT_URL || !mysql_host || !mysql_user || !mysql_password || !mysql_database || !SECRET_JWT_KEY || !SALT_ROUNDS) {
     throw new Error("Missing required variables in .env file.")
 }
