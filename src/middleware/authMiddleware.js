@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { SECRET_JWT_KEY } from '../../config.js'
 
 const authMiddleware = (req, res, next) => {
-    const token = req.headers['authorization']
+    const token = req.cookies.access_token
 
     if (!token) {
         return res.status(401).json({ message: 'Access denied, no token provided' })
