@@ -1,7 +1,7 @@
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { SALT_ROUNDS, SECRET_JWT_KEY } from '../../config.js'
+import { NODE_ENV, SALT_ROUNDS, SECRET_JWT_KEY } from '../../config.js'
 
 export class AuthController {
     static async register(req, res) {
@@ -50,7 +50,7 @@ export class AuthController {
             
             res.cookie('access_token', token, {
                 httpOnly: true,                                 // Only be modified from the server.
-                secure: process.env.NODE_ENV === 'production',  // Cookie only can be accessed via HTTPS.
+                secure: NODE_ENV === 'production',              // Cookie only can be accessed via HTTPS.
                 sameSite: 'strict',                             // Only be accessed from the same domain.
                 maxAge: 1000 * 60 * 60                          // Cookie has a validity time of 1 hour.
             })
