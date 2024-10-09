@@ -6,10 +6,14 @@ import userRoutes from './routes/userRoutes.js'
 import transactionRoutes from './routes/transactionRoutes.js'
 import taskRoutes from './routes/taskRoutes.js'
 import pool from './db/db.js'
+import { CLIENT_URL } from '../config.js'
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+    origin: CLIENT_URL,
+    credentials: true
+}))
 
 app.use(express.json())
 
