@@ -50,8 +50,8 @@ export class AuthController {
             
             res.cookie('access_token', token, {
                 httpOnly: true,                                 // Only be modified from the server.
-                secure: NODE_ENV === 'production',              // Cookie only can be accessed via HTTPS.
-                sameSite: 'strict',                             // Only be accessed from the same domain.
+                secure: true,                                   // Cookie only can be accessed via HTTPS.
+                sameSite: 'none',                               // Only be accessed from the same domain.
                 maxAge: 1000 * 60 * 60                          // Cookie has a validity time of 1 hour.
             })
                .send({
@@ -65,8 +65,14 @@ export class AuthController {
     }
 
     static async logout(req, res) {
-        res.clearCookie('access_token')
-           .json({ message: 'Logout successful'}) // This could be changed to a simple redirection...
+        res.clearCookie('access_token', {
+            httpOnly: true,                                 // Only be modified from the server.
+            secure: true,                                   // Cookie only can be accessed via HTTPS.
+            sameSite: 'none',                               // Only be accessed from the same domain.
+            path: '/'
+        })
+        
+        res.status(200).json({ message: 'Logout successful'})
     }
 }
 
