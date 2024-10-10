@@ -46,8 +46,6 @@ export class TaskController {
             if (status_task) data.status_task = status_task
             if (due_date) data.due_date = due_date
 
-            console.log(data)
-
             await Task.updateTask(id, data)
             
             res.json({ message: 'Task updated successfully' })
