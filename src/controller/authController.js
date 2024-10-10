@@ -52,7 +52,8 @@ export class AuthController {
                 httpOnly: true,                                 // Only be modified from the server.
                 secure: true,                                   // Cookie only can be accessed via HTTPS.
                 sameSite: 'none',                               // Only be accessed from the same domain.
-                maxAge: 1000 * 60 * 60                          // Cookie has a validity time of 1 hour.
+                maxAge: 1000 * 60 * 60,                         // Cookie has a validity time of 1 hour.
+                path: '/'
             })
                .send({
                  'id': user.id,
