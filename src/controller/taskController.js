@@ -33,6 +33,22 @@ export class TaskController {
         }
     }
 
+    static async getAll(req, res) {
+        const { id: USER_ID } = req.user
+
+        try {
+            const tasks = await Task.getAllTasksById(USER_ID)
+
+            if (tasks) {
+                res.json(tasks)
+            } else {
+                res.status(404).json({ error: 'Task not found' })
+            }
+        } catch (error) {
+            res.status(500).json({ error: 'Error fetching task' })
+        }
+    }
+
     static async update(req, res) {
         const { id } = req.params
         const { description_task, status_task, due_date } = req.body
