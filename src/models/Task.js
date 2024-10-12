@@ -13,6 +13,11 @@ class Task {
         const [rows] = await pool.query('SELECT * FROM task WHERE id = ?', [id])
         return rows[0]
     }
+    
+    static async getAllTasksById(id_user) {
+        const [rows] = await pool.query('SELECT * FROM task WHERE id_user = ?', [id_user])
+        return rows
+    }
 
     static async updateTask(id, data) {
         let query = `UPDATE task SET`
