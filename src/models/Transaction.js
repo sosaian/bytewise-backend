@@ -25,6 +25,11 @@ class Transaction{
         return rows[0];
     }
 
+    static async getAllTransactionsById(id_user) {
+        const [rows] = await pool.query('SELECT * FROM transactions WHERE id_user = ?', [id_user])
+        return rows
+    }
+
     static async deleteTransaction(id){
         await pool.query('delete from transactions where id = ?', [id]);
     }
