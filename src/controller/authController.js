@@ -75,6 +75,20 @@ export class AuthController {
         
         res.status(200).json({ message: 'Logout successful'})
     }
+
+    static async checkLogin(req,res) {
+        const token = req.cookies.access_token
+
+        if (!token) {
+            return res.status(401).json({ message: 'Access denied, no token provided' })
+        }
+    
+        jwt.verify(token, SECRET_JWT_KEY, (err, decoded) => {
+            if (err) return res.status(400).json({ message: 'Invalid token' })
+
+            return res.status(200).json({ message: 'Login is valid', name: decoded.name })
+        })
+    }
 }
 
 export class Validation {
