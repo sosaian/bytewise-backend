@@ -4,6 +4,8 @@ import { TransactionController } from '../controller/transactionController.js'
 
 const router = express.Router()
 
+router.get('/api/transaction/user', authMiddleware, TransactionController.getAll)
+
 router.post('/api/transaction', authMiddleware, TransactionController.create)
 router.get('/api/transaction/:id', authMiddleware, TransactionController.get)
 router.put('/api/transaction/:id', authMiddleware, TransactionController.update)
