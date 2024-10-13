@@ -1,7 +1,7 @@
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { NODE_ENV, SALT_ROUNDS, SECRET_JWT_KEY } from '../../config.js'
+import { SALT_ROUNDS, SECRET_JWT_KEY } from '../../config.js'
 
 export class AuthController {
     static async register(req, res) {
@@ -39,7 +39,7 @@ export class AuthController {
             const isValid = await bcrypt.compare(password, user.password_user)
             if (!isValid) throw new Error('Password is invalid')
     
-            const token = jwt.sign({ id: user.id }, SECRET_JWT_KEY, {
+            const token = jwt.sign({ id: user.id, name: user.name_user }, SECRET_JWT_KEY, {
                 expiresIn: '1h'
             })
     
