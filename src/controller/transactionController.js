@@ -32,6 +32,22 @@ export class TransactionController {
         }
     }
 
+    static async getAll(req, res) {
+        const { id: USER_ID } = req.user
+
+        try {
+            const transaction = await Transaction.getAllTransactionsById(USER_ID)
+
+            if (transaction) {
+                res.json(transaction)
+            } else {
+                res.status(404).json({ error: 'Transaction not found' })
+            }
+        } catch (error) {
+            res.status(500).json({ error: 'Error fetching transaction' })
+        }
+    }
+
     static async update(req, res) {
         const { id } = req.params
         const { type_transaction, amount, date_transaction, description_transaction } = req.body
