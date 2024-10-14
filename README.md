@@ -9,7 +9,6 @@ Este fue el proyecto final del curso, donde pudimos poner en práctica los conoc
 ## Miembros del grupo
 
 * Paola Fraticola ([@dgpaofraticola](https://github.com/dgpaofraticola))
-* Juan Carlos Helwig ([@TicoHelwig](https://github.com/TicoHelwig))
 * Ian Sosa ([@sosaian](https://github.com/sosaian))
 * Evelin Suarez ([@evelinnn19](https://github.com/evelinnn19))
 
